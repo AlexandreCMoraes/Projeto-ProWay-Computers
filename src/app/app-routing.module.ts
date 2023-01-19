@@ -1,10 +1,22 @@
+import { NaoEncontradoComponent } from './nao-encontrado/nao-encontrado.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+// criado modulo de produtos (ng g module produtos --route produtos --module app.module - esse codigo ja cria o path) para utilizar o lazy-load depois
+const routes: Routes = [
+  {
+    path: 'produtos',
+    loadChildren: () =>
+      import('./produtos/produtos.module').then((m) => m.ProdutosModule),
+  },
+  // com isso a raiz ja fica em /produtos
+  { path: '', redirectTo: 'produtos', pathMatch: 'full' },
+  { path: 'carrinho', loadChildren: () => import('./carrinho/carrinho.module').then(m => m.CarrinhoModule) },
+  { path: '**', component: NaoEncontradoComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
