@@ -13,7 +13,8 @@ export class CarrinhoService {
 
   obtemCarrinho() {
     // vai ser tratado como obj
-    this.itens = JSON.parse(localStorage.getItem('carrinho') || '');
+    // Ao clicar no botão de compra, Volta para Página de produto e ao colocar um vetor vazio ao invés de uma string, é zerado o conteúdo, que são os números do carrinho
+    this.itens = JSON.parse(localStorage.getItem('carrinho') || '[]');
     return this.itens;
   }
 
@@ -21,6 +22,13 @@ export class CarrinhoService {
     // add no IProdutoCarrinho
     this.itens.push(produto);
     // add no localStorage
+    localStorage.setItem('carrinho', JSON.stringify(this.itens));
+  }
+
+  removerProdCarrinho(produtoId: number) {
+    // filtra e remove o item que tem o id diferente do produtoId, mantendo o produto que tenha o id diferente
+    this.itens = this.itens.filter((item) => item.id !== produtoId);
+    // sobreescreve so dados
     localStorage.setItem('carrinho', JSON.stringify(this.itens));
   }
 
