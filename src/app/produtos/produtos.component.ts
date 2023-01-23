@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IProduto, produtos } from '../produtos';
+import { IProduto } from '../produtos';
 import { ProdutosService } from '../produtos.service';
 
 @Component({
@@ -19,8 +19,21 @@ export class ProdutosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // aqui obtera todos os produtos
-    this.produtos = this.produtosService.getAll();
-    console.log(this.produtos);
+    // pega os produtos
+    const produtos = this.produtosService.getAll();
+    // pega as info e transforma em lowercase na nav de pesquisa
+    this.route.queryParamMap.subscribe((params) => {
+      const descricao = params.get('descricao')?.toLowerCase();
+
+      // validando se tiver descricao
+      if (descricao) {
+        // se for igual da pesquisa com do servico em lowercase
+        this.produtos = produtos.filter((produtos) =>
+          produtos.descricao.toLowerCase().includes(descricao)
+        );
+        return;
+      }
+      this.produtos = produtos;
+    });
   }
 }

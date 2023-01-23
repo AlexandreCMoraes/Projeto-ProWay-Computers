@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BarraDePesquisaComponent } from './barra-de-pesquisa/barra-de-pesquisa.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     HeaderComponent,
     FooterComponent,
     NaoEncontradoComponent,
+    BarraDePesquisaComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    FormsModule
   ],
   // para funcionar o snackbar, foi necessario colocar no provider
   providers: [MatSnackBar],
